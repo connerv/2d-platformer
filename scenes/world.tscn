@@ -42,14 +42,26 @@ shader_parameter/color_alpha = 0.80000001192096
 shader_parameter/reflection_strength = 0.5
 shader_parameter/distortion_strength = 0.01
 shader_parameter/wave_speed = 0.35000000521542
-shader_parameter/reflection_fade = 0.5
+shader_parameter/reflection_fade = 0.749999983236
 shader_parameter/rect_height = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k0juu"]
+size = Vector2(676, 91)
+
+[sub_resource type="Gradient" id="Gradient_k0juu"]
+offsets = PackedFloat32Array(0.0057971017, 1)
+colors = PackedColorArray(0.45882353, 0.5254902, 0.98039216, 1, 1, 0.7591745, 0.8677562, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71j4m"]
+gradient = SubResource("Gradient_k0juu")
 
 [node name="World" type="Node2D" unique_id=108848775]
 
-[node name="Player" parent="." unique_id=601265576 node_paths=PackedStringArray("ladder_tilemap") instance=ExtResource("1_nnsk1")]
+[node name="Player" parent="." unique_id=601265576 node_paths=PackedStringArray("ladder_tilemap", "ground_tilemap", "water_area") instance=ExtResource("1_nnsk1")]
 jump_force = -155.0
 ladder_tilemap = NodePath("../TileMapLayer")
+ground_tilemap = NodePath("../TileMapLayer")
+water_area = NodePath("../Water/Water")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1280965743]
 position = Vector2(-1, 0)
@@ -59,6 +71,7 @@ rendering_quadrant_size = 8
 physics_quadrant_size = 8
 
 [node name="Background" type="Sprite2D" parent="." unique_id=38603644]
+visible = false
 modulate = Color(0.0011271432, 0.03382985, 0.03332782, 1)
 z_index = -1
 position = Vector2(-331, -219)
@@ -90,8 +103,12 @@ position = Vector2(3, -44)
 [node name="Candle7" parent="." unique_id=1991295079 instance=ExtResource("3_4wyf3")]
 position = Vector2(85, -76)
 
-[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=202240378]
+[node name="Night" type="CanvasModulate" parent="." unique_id=202240378]
+visible = false
 color = Color(0.2291616, 0.25386593, 0.48114577, 1)
+
+[node name="Day" type="CanvasModulate" parent="." unique_id=1617111289]
+color = Color(1, 0.9019608, 0.9019608, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=558984212]
 visible = false
@@ -102,10 +119,27 @@ offset_right = 336.0
 offset_bottom = 68.0
 color = Color(0.023529412, 0.05490196, 0.15294118, 1)
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1282765056]
-z_index = 1
+[node name="Water" type="ColorRect" parent="." unique_id=1282765056]
 material = SubResource("ShaderMaterial_k0juu")
-offset_left = -159.0
-offset_top = 68.0
-offset_right = 338.0
-offset_bottom = 155.0
+offset_left = -254.0
+offset_top = 66.0
+offset_right = 422.0
+offset_bottom = 168.0
+
+[node name="Water" type="Area2D" parent="Water" unique_id=498847353]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/Water" unique_id=668671833]
+position = Vector2(338, 48.5)
+shape = SubResource("RectangleShape2D_k0juu")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1480269604]
+layer = -1
+
+[node name="Sky" type="TextureRect" parent="CanvasLayer" unique_id=1727722764]
+z_index = -1
+offset_left = 320.01382
+offset_top = 0.16374683
+offset_right = 500.0144
+offset_bottom = 480.0379
+rotation = 1.5707964
+texture = SubResource("GradientTexture2D_71j4m")
