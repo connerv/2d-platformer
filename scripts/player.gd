@@ -15,12 +15,14 @@ extends CharacterBody2D
 @export var ladder_tilemap: TileMapLayer
 @export var ground_tilemap: TileMapLayer
 @export var water_area: Area2D
+@export var step_interval: float = 0.2
 
 const TILE_SIZE: int = 8
 const DROWN_DURATION: float = 1.2
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
+var step_timer: float = 0.0
 var was_on_floor: bool = false
 var just_jumped: bool = false
 var is_drowning: bool = false
@@ -28,6 +30,7 @@ var last_ground_tile: Vector2 = Vector2.ZERO
 
 @onready var anim: AnimatedSprite2D = $AnimSprite
 @onready var anim_reflection: AnimatedSprite2D = $AnimSpriteReflection
+@onready var step_sounds: Array = [$SFX/Step1, $SFX/Step2, $SFX/Step3]
 
 func _ready() -> void:
 	last_ground_tile = global_position
@@ -55,12 +58,22 @@ func _physics_process(delta: float) -> void:
 
 	if is_on_floor():
 		_try_save_ground_position()
+		_tick_step_sounds(delta)
 
 	was_on_floor = is_on_floor()
 	move_and_slide()
 	_update_animation()
 
-# Plays animation on both sprites and syncs flip
+func _tick_step_sounds(delta: float) -> void:
+	if velocity.x != 0:
+		step_timer -= delta
+		if step_timer <= 0.0:
+			#step_sounds[randi() % step_sounds.size()].play()
+			step_sounds[1].play()
+			step_timer = step_interval
+	else:
+		step_timer = 0.0
+
 func _play(anim_name: String) -> void:
 	anim.play(anim_name)
 	anim_reflection.play(anim_name)
@@ -89,7 +102,6 @@ func _start_drown() -> void:
 	is_drowning = true
 	velocity = Vector2.ZERO
 	anim.play("drown")
-	# Reflection sprite doesn't need to play drown — hide it
 	anim_reflection.visible = false
 	await get_tree().create_timer(DROWN_DURATION).timeout
 	_respawn()

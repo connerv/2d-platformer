@@ -7,6 +7,7 @@ extends AnimatedSprite2D
 var time: float = 0.0
 
 @onready var light := $PointLight2D
+@onready var sfx := $AudioStreamPlayer2D
 
 func _ready() -> void:
 	_set_state(is_on)
@@ -26,5 +27,8 @@ func interact() -> void:
 func _set_state(on: bool) -> void:
 	is_on = on
 	light.enabled = is_on
-	if not is_on:
+	if is_on:
+		sfx.play()
+	else:
+		sfx.stop()
 		play("off")

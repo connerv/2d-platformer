@@ -6,8 +6,10 @@ uniform float uv_scale : hint_range(0.0, 10.0, 0.1) = 1.0;
 uniform float color_alpha : hint_range(0.0, 1.0, 0.1) = 1.0;
 uniform float reflection_strength : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform float distortion_strength : hint_range(0.0, 0.05, 0.001) = 0.01;
+uniform float distortion_falloff_pixels : hint_range(0.0, 100.0, 1.0) = 16.0;
 uniform float wave_speed : hint_range(0.0, 5.0, 0.05) = 1.0;
 uniform float reflection_fade : hint_range(0.0, 1.0, 0.01) = 0.5;
+uniform float reflection_offset : hint_range(0.0, 100.0, 1.0) = 0.0;
 uniform float rect_height = 0.5;
 
 uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
@@ -74,14 +76,24 @@ void fragment() {
         water_color = mix(water_colour, sky_colour, dot(norm, normalize(vec3(0.0, 0.2, 1.0))));
     }
 
-    float screen_top_y = SCREEN_UV.y - UV.y * rect_height;
-    float reflected_y  = screen_top_y - UV.y * rect_height;
-    vec2 reflected_uv  = vec2(SCREEN_UV.x, reflected_y);
-    reflected_uv += norm.xy * distortion_strength;
+    float offset_uv = reflection_offset * SCREEN_PIXEL_SIZE.y;
+    float clamped_uv_y = max(UV.y, offset_uv / rect_height);
 
-    // Fade reflection top (UV.y=0, full) to bottom (UV.y=1, gone)
-    // reflection_fade controls how aggressively it fades:
-    // 0.0 = no fade, 1.0 = fades completely by the bottom
+    // Current pixel position in pixels from the top of the rect
+    float pixel_y = UV.y / SCREEN_PIXEL_SIZE.y;
+    // The offset point in pixels from the top of the rect
+    float offset_px = reflection_offset;
+    // The bottom of the falloff zone in pixels
+    float falloff_end_px = offset_px + distortion_falloff_pixels;
+    // How far this pixel is into the falloff zone (0 at offset, 1 at falloff_end)
+    // Pixels above offset get 0, pixels below falloff_end get full strength
+    float distortion_scale = clamp((pixel_y - offset_px) / max(distortion_falloff_pixels, 0.001), 0.0, 1.0);
+
+    float screen_top_y = SCREEN_UV.y - UV.y * rect_height + offset_uv;
+    float reflected_y  = screen_top_y - clamped_uv_y * rect_height;
+    vec2 reflected_uv  = vec2(SCREEN_UV.x, reflected_y);
+    reflected_uv += norm.xy * distortion_strength * distortion_scale;
+
     float fade = 1.0 - pow(UV.y, 1.0 - reflection_fade + 0.001);
     float effective_reflection = reflection_strength * clamp(fade, 0.0, 1.0);
 
