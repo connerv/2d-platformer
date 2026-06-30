@@ -1,0 +1,5 @@
+res://scenes/portal.tscn
+res://scenes/world.tscn
+res://scripts/portal.gd
+res://scripts/camera.gd
+res://scripts/world.gd

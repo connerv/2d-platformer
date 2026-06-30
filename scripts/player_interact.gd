@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var indicator := $Sprite2D
 
-var current_interactable: Interactable = null
+var current_interactable: Node = null
 
 func _ready() -> void:
 	indicator.visible = false
@@ -15,7 +15,7 @@ func _process(_delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	var parent := area.get_parent()
-	if parent is Interactable:
+	if parent.has_method("interact"):
 		current_interactable = parent
 		indicator.visible = true
 
