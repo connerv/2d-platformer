@@ -239,11 +239,6 @@ animation = &"drown"
 frame = 5
 frame_progress = 1.0
 
-[node name="Camera2D2" type="Camera2D" parent="." unique_id=368593670]
-position = Vector2(0, -1)
-position_smoothing_enabled = true
-drag_horizontal_enabled = true
-
 [node name="AnimSpriteReflection" type="AnimatedSprite2D" parent="." unique_id=159556171]
 sprite_frames = SubResource("SpriteFrames_u8vuu")
 animation = &"drown"

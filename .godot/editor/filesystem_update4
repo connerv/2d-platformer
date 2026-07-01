@@ -1,5 +1,9 @@
-res://scenes/portal.tscn
 res://scenes/world.tscn
-res://scripts/portal.gd
-res://scripts/camera.gd
+res://scenes/portal.tscn
+res://scenes/map2.tscn
+res://scenes/map1.tscn
+res://scenes/map2bg.tscn
+res://scenes/map1bg.tscn
 res://scripts/world.gd
+res://scenes/player.tscn
+res://shaders/water.gdshader

@@ -11,6 +11,7 @@ uniform float wave_speed : hint_range(0.0, 5.0, 0.05) = 1.0;
 uniform float reflection_fade : hint_range(0.0, 1.0, 0.01) = 0.5;
 uniform float reflection_offset : hint_range(0.0, 100.0, 1.0) = 0.0;
 uniform float rect_height = 0.5;
+uniform float horizontal_stretch : hint_range(0.1, 20.0, 0.1) = 4.0;
 
 uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
 
@@ -61,6 +62,11 @@ vec4 hn_fdm(vec2 p, float t) {
 
 void fragment() {
     vec2 uv_screen = (UV - 0.5) * uv_scale;
+    // Auto-correct for the rect's width:height. fwidth(UV) is how much UV changes
+    // per screen pixel, so 1/fwidth is the rect's size in pixels. Scaling x by the
+    // aspect keeps the waves square no matter how long the water rect is stretched.
+    float aspect = fwidth(UV.y) / fwidth(UV.x);
+    uv_screen.x *= aspect / horizontal_stretch;
     vec4 nh = hn_fdm(uv_screen * 10.0, iTime * wave_speed);
     vec3 norm = nh.xyz;
 

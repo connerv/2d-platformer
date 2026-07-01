@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://dxyedraa0q0nx" path="res://scripts/map.gd" id="1_v7ld6"]
 [ext_resource type="Texture2D" uid="uid://bp0mkjybq5tgn" path="res://tilesets/tiles.png" id="2_wpo3d"]
 [ext_resource type="PackedScene" uid="uid://bay3ygnnyf3rv" path="res://scenes/candle.tscn" id="3_uyy6q"]
+[ext_resource type="PackedScene" uid="uid://bx8277epyxxmu" path="res://scenes/map2bg.tscn" id="4_x0ugi"]
+[ext_resource type="PackedScene" uid="uid://d4a1x3ue583kr" path="res://scenes/portal.tscn" id="5_wpo3d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
 texture = ExtResource("2_wpo3d")
@@ -116,3 +118,14 @@ color = Color(0.023529412, 0.05490196, 0.15294118, 1)
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1182948823]
 position = Vector2(32, 2)
+
+[node name="PortalMap1" parent="." unique_id=1395052732 node_paths=PackedStringArray("map") instance=ExtResource("5_wpo3d")]
+position = Vector2(29, 1)
+scale = Vector2(0.035, 0.035)
+map = NodePath("..")
+link_id = "1"
+
+[node name="Map2bg" parent="." unique_id=827451854 instance=ExtResource("4_x0ugi")]
+modulate = Color(1, 1, 1, 0.3137255)
+position = Vector2(325, 47)
+scale = Vector2(0.3, 0.3)

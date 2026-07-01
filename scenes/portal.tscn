@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ffj6"]
 size = Vector2(245, 391)
 
-[node name="Portal" type="Node2D" unique_id=1395052732]
+[node name="Portal" type="Node2D" unique_id=1395052732 groups=["portals"]]
 script = ExtResource("1_1ffj6")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=584765589]
