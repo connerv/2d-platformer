@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://bweysy72qljkv"]
+
+[ext_resource type="Script" uid="uid://3vykeb58xk7o" path="res://scripts/world.gd" id="1_71j4m"]
+[ext_resource type="PackedScene" uid="uid://cmr76h63iytrr" path="res://scenes/player.tscn" id="1_nnsk1"]
+[ext_resource type="PackedScene" uid="uid://dpsmx1duq7ihy" path="res://scenes/map1.tscn" id="3_4wyf3"]
+[ext_resource type="Script" uid="uid://co17q5qhcen1e" path="res://scripts/camera.gd" id="3_k0juu"]
+[ext_resource type="Shader" uid="uid://cjlnj3tp5ww1o" path="res://shaders/water.gdshader" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://cp3vxprd1i30c" path="res://scenes/map2.tscn" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://d4a1x3ue583kr" path="res://scenes/portal.tscn" id="7_i7141"]
+
+[sub_resource type="Gradient" id="Gradient_k0juu"]
+offsets = PackedFloat32Array(0.0057971017, 1)
+colors = PackedColorArray(0.45882353, 0.5254902, 0.98039216, 1, 1, 0.7591745, 0.8677562, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71j4m"]
+gradient = SubResource("Gradient_k0juu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
+shader = ExtResource("4_k0juu")
+shader_parameter/uv_scale = 1.60000002384192
+shader_parameter/color_alpha = 0.80000001192096
+shader_parameter/reflection_strength = 0.5
+shader_parameter/distortion_strength = 0.01
+shader_parameter/distortion_falloff_pixels = 16.0
+shader_parameter/wave_speed = 0.35000000521542
+shader_parameter/reflection_fade = 0.749999983236
+shader_parameter/reflection_offset = 4.0
+shader_parameter/rect_height = 0.5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k0juu"]
+size = Vector2(676, 91)
+
+[node name="World" type="Node2D" unique_id=108848775 node_paths=PackedStringArray("player", "current_map", "camera")]
+script = ExtResource("1_71j4m")
+player = NodePath("Player")
+current_map = NodePath("Map1")
+camera = NodePath("Camera2D")
+
+[node name="Player" parent="." unique_id=601265576 node_paths=PackedStringArray("water_area") instance=ExtResource("1_nnsk1")]
+jump_force = -155.0
+water_area = NodePath("../Water/Water")
+step_interval = 0.15
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1480269604]
+layer = -1
+
+[node name="Sky" type="TextureRect" parent="CanvasLayer" unique_id=1727722764]
+z_index = -1
+offset_left = 320.01382
+offset_top = 0.16374683
+offset_right = 500.0144
+offset_bottom = 480.0379
+rotation = 1.5707964
+texture = SubResource("GradientTexture2D_71j4m")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1682196935 node_paths=PackedStringArray("player")]
+position = Vector2(0, -1)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+script = ExtResource("3_k0juu")
+player = NodePath("../Player")
+
+[node name="Night" type="CanvasModulate" parent="." unique_id=765523903]
+visible = false
+color = Color(0.2291616, 0.25386593, 0.48114577, 1)
+
+[node name="Day" type="CanvasModulate" parent="." unique_id=1506081585]
+position = Vector2(1, 0)
+color = Color(1, 0.9019608, 0.9019608, 1)
+
+[node name="Map2" parent="." unique_id=1332190545 instance=ExtResource("6_qfnet")]
+position = Vector2(450, 0)
+
+[node name="Map1" parent="." unique_id=2078819505 instance=ExtResource("3_4wyf3")]
+
+[node name="Water" type="ColorRect" parent="." unique_id=1282765056]
+material = SubResource("ShaderMaterial_k0juu")
+offset_left = -255.0
+offset_top = 68.0
+offset_right = 421.0
+offset_bottom = 170.0
+
+[node name="Water" type="Area2D" parent="Water" unique_id=498847353]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/Water" unique_id=668671833]
+position = Vector2(338, 48.5)
+shape = SubResource("RectangleShape2D_k0juu")
+
+[node name="Portal" parent="." unique_id=1395052732 node_paths=PackedStringArray("target_map") instance=ExtResource("7_i7141")]
+position = Vector2(29, 1)
+scale = Vector2(0.035, 0.035)
+target_map = NodePath("../Map2")

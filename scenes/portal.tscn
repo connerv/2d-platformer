@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://d4a1x3ue583kr"]
+
+[ext_resource type="Script" uid="uid://l8wsyp43ikj6" path="res://scripts/portal.gd" id="1_1ffj6"]
+[ext_resource type="Texture2D" uid="uid://dggjjhvj6arxn" path="res://assets/sprites/other/door.png" id="1_v0xau"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ffj6"]
+size = Vector2(245, 391)
+
+[node name="Portal" type="Node2D" unique_id=1395052732 groups=["portals"]]
+script = ExtResource("1_1ffj6")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=584765589]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2093941661]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_1ffj6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1396272502]
+texture = ExtResource("1_v0xau")

@@ -1,55 +1,18 @@
-[gd_scene format=4 uid="uid://bweysy72qljkv"]
+[gd_scene format=3 uid="uid://bweysy72qljkv"]
 
+[ext_resource type="Script" uid="uid://3vykeb58xk7o" path="res://scripts/world.gd" id="1_71j4m"]
 [ext_resource type="PackedScene" uid="uid://cmr76h63iytrr" path="res://scenes/player.tscn" id="1_nnsk1"]
-[ext_resource type="Texture2D" uid="uid://bp0mkjybq5tgn" path="res://tilesets/tiles.png" id="2_rwgxs"]
-[ext_resource type="PackedScene" uid="uid://bay3ygnnyf3rv" path="res://scenes/candle.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://dpsmx1duq7ihy" path="res://scenes/map1.tscn" id="3_4wyf3"]
+[ext_resource type="Script" uid="uid://co17q5qhcen1e" path="res://scripts/camera.gd" id="3_k0juu"]
 [ext_resource type="Shader" uid="uid://cjlnj3tp5ww1o" path="res://shaders/water.gdshader" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://cp3vxprd1i30c" path="res://scenes/map2.tscn" id="6_qfnet"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4wyf3"]
-texture = ExtResource("2_rwgxs")
-texture_region_size = Vector2i(8, 8)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-1:1/0 = 0
-1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, -4, 4)
-0:2/0 = 0
-1:2/0 = 0
-0:3/0 = 0
-1:3/0 = 0
-0:4/0 = 0
-0:4/0/custom_data_0 = true
-0:6/0 = 0
-0:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, -2.0078125, -4, -1.9892216)
-1:6/0 = 0
-1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-0:7/0 = 0
-0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, -2.0078125, -4, -2.0078125)
-1:7/0 = 0
-1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-0:8/0 = 0
-0:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-1:8/0 = 0
-1:8/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-0:9/0 = 0
-0:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
-1:9/0 = 0
-1:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+[sub_resource type="Gradient" id="Gradient_k0juu"]
+offsets = PackedFloat32Array(0.0057971017, 1)
+colors = PackedColorArray(0.45882353, 0.5254902, 0.98039216, 1, 1, 0.7591745, 0.8677562, 1)
 
-[sub_resource type="TileSet" id="TileSet_k0juu"]
-tile_size = Vector2i(8, 8)
-physics_layer_0/collision_layer = 1
-custom_data_layer_0/name = "is_ladder"
-custom_data_layer_0/type = 1
-sources/0 = SubResource("TileSetAtlasSource_4wyf3")
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_rwgxs"]
-
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_4wyf3"]
-polygon = PackedVector2Array(0, 0, 9, 0, 9, 8, 0, 8)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_71j4m"]
+gradient = SubResource("Gradient_k0juu")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k0juu"]
 shader = ExtResource("4_k0juu")
@@ -66,100 +29,16 @@ shader_parameter/rect_height = 0.5
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k0juu"]
 size = Vector2(676, 91)
 
-[sub_resource type="Gradient" id="Gradient_k0juu"]
-offsets = PackedFloat32Array(0.0057971017, 1)
-colors = PackedColorArray(0.45882353, 0.5254902, 0.98039216, 1, 1, 0.7591745, 0.8677562, 1)
+[node name="World" type="Node2D" unique_id=108848775 node_paths=PackedStringArray("player", "current_map", "camera")]
+script = ExtResource("1_71j4m")
+player = NodePath("Player")
+current_map = NodePath("Map1")
+camera = NodePath("Camera2D")
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_71j4m"]
-gradient = SubResource("Gradient_k0juu")
-
-[node name="World" type="Node2D" unique_id=108848775]
-
-[node name="Player" parent="." unique_id=601265576 node_paths=PackedStringArray("ladder_tilemap", "ground_tilemap", "water_area") instance=ExtResource("1_nnsk1")]
+[node name="Player" parent="." unique_id=601265576 node_paths=PackedStringArray("water_area") instance=ExtResource("1_nnsk1")]
 jump_force = -155.0
-ladder_tilemap = NodePath("../MiddleGround")
-ground_tilemap = NodePath("../MiddleGround")
 water_area = NodePath("../Water/Water")
 step_interval = 0.15
-
-[node name="MiddleGround" type="TileMapLayer" parent="." unique_id=1280965743]
-position = Vector2(-1, 0)
-tile_map_data = PackedByteArray("AAAAAAEAAAAAAAAAAAD//wEAAAAAAAAAAAD+/wEAAAAAAAAAAAD9/wEAAAAAAAAAAAABAAEAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAAAAAEAAAADAAIAAAAAAAEAAAACAAIAAAAAAAEAAAABAAIAAAAAAAEAAAAAAAIAAAAAAAEAAAD//wIAAAAAAAEAAAD+/wIAAAAAAAEAAAD9/wIAAAAAAAEAAAD9/wMAAAAAAAEAAAD+/wMAAAAAAAEAAAD//wMAAAAAAAEAAAAAAAMAAAAAAAEAAAABAAMAAAAAAAEAAAACAAMAAAAAAAEAAAADAAMAAAAAAAEAAAAEAAMAAAABAAEAAAD8/wIAAAAAAAEAAAD8/wMAAAAAAAEAAAAFAAIAAAABAAEAAAAFAAEAAAAAAAAAAAD8/wEAAAAAAAAAAAD7/wMAAAAAAAEAAAD7/wIAAAAAAAEAAAD7/wEAAAAAAAEAAAD7/wAAAAAAAAEAAAD7////AAAAAAEAAAD7//7/AAAAAAAAAAD6//7/AAAAAAAAAAD6////AAAAAAEAAAD6/wAAAAAAAAEAAAD6/wEAAAAAAAEAAAD6/wIAAAAAAAEAAAD6/wMAAAAAAAEAAAD5/wMAAAAAAAEAAAD5/wIAAAAAAAEAAAD5/wEAAAAAAAEAAAD5/wAAAAAAAAEAAAD5////AAAAAAEAAAD5//7/AAAAAAAAAAALAAQAAAAAAAEAAAALAAUAAAAAAAEAAAALAAYAAAAAAAEAAAAMAAQAAAAAAAEAAAAMAAUAAAAAAAEAAAAMAAYAAAAAAAEAAAANAAQAAAAAAAEAAAANAAUAAAAAAAEAAAANAAYAAAAAAAEAAAAOAAQAAAABAAAAAAAOAAUAAAAAAAEAAAAOAAYAAAABAAEAAAAPAAQAAAAAAAAAAAAPAAUAAAABAAEAAAAGAAUAAAABAAAAAAAGAAYAAAAAAAEAAAAHAAUAAAABAAAAAAAHAAYAAAAAAAEAAAAIAAUAAAABAAAAAAAIAAYAAAAAAAEAAAAJAAUAAAABAAAAAAAJAAYAAAAAAAEAAAAKAAQAAAAAAAAAAAAKAAUAAAAAAAEAAAAKAAYAAAAAAAEAAAALAAAAAAAAAAAAAAALAAEAAAAAAAEAAAALAAIAAAAAAAEAAAALAAMAAAAAAAEAAAAMAAAAAAAAAAAAAAAMAAEAAAAAAAEAAAAMAAIAAAAAAAEAAAAMAAMAAAAAAAEAAAANAAAAAAAAAAAAAAANAAEAAAAAAAEAAAANAAIAAAAAAAEAAAANAAMAAAAAAAEAAAAFAP7/AAAAAAAAAAAGAP7/AAAAAAAAAAAHAP7/AAAAAAAAAAAIAP7/AAAAAAAAAAACAP7/AAABAAEAAAABAP7/AAAAAAEAAAACAP3/AAAAAAEAAAABAP3/AAAAAAEAAAAAAP3/AAAAAAEAAAAAAPz/AAAAAAEAAAABAPz/AAAAAAEAAAACAPz/AAAAAAEAAAD///z/AAAAAAEAAAD+//z/AAAAAAEAAAD+//v/AAAAAAAAAAD///v/AAAAAAAAAAAAAPv/AAAAAAAAAAABAPv/AAABAAAAAAACAPv/AAABAAAAAAD///3/AAAAAAEAAAD///7/AAABAAIAAAD//wAAAAABAAMAAAD/////AAAAAAMAAAAHAAMAAAAAAAIAAAAHAAQAAAABAAMAAAAFAAcAAAABAAAAAAAEAAcAAAABAAAAAAADAAcAAAABAAAAAAACAAcAAAABAAAAAAABAAcAAAABAAAAAAAAAAcAAAABAAAAAAD//wcAAAABAAAAAAD+/wcAAAABAAAAAAD9/wcAAAABAAAAAAD8/wcAAAABAAAAAAD7/wcAAAAAAAEAAAD6/wcAAAAAAAEAAAD5/wcAAAAAAAEAAAD5/wQAAAAAAAEAAAD6/wQAAAAAAAEAAAD6/wUAAAAAAAEAAAD5/wUAAAAAAAEAAAD7/wQAAAAAAAEAAAD7/wUAAAAAAAEAAAD5/wYAAAAAAAEAAAD6/wYAAAAAAAEAAAD7/wYAAAAAAAEAAAD5/wgAAAAAAAkAAAD6/wgAAAAAAAkAAAD7/wgAAAAAAAkAAAD8/wgAAAAAAAkAAAD9/wgAAAAAAAkAAAD+/wgAAAAAAAkAAAD//wgAAAAAAAkAAAAAAAgAAAAAAAkAAAABAAgAAAAAAAkAAAACAAgAAAAAAAkAAAADAAgAAAAAAAkAAAAEAAgAAAAAAAkAAAAFAAgAAAAAAAkAAAAGAAgAAAAAAAkAAAAGAAcAAAAAAAEAAAAHAAcAAAAAAAEAAAAHAAgAAAAAAAkAAAAIAAgAAAAAAAkAAAAIAAcAAAAAAAEAAAAJAAcAAAAAAAEAAAAJAAgAAAAAAAkAAAAKAAcAAAAAAAEAAAALAAcAAAAAAAEAAAAMAAcAAAABAAEAAAD9/wAAAAAAAAQAAAD9////AAAAAAQAAAD9//7/AAAAAAQAAAD9//3/AAAAAAQAAAD9//z/AAAAAAQAAAD9//v/AAAAAAQAAAD9//r/AAAAAAQAAAATAAYAAAAAAAAAAAAUAAYAAAAAAAAAAAAVAAYAAAAAAAAAAAAWAAYAAAAAAAAAAAAXAAYAAAAAAAAAAAAYAAMAAAABAAAAAAAZAAMAAAABAAAAAAAaAAMAAAABAAAAAAAYAAQAAAAAAAEAAAAZAAQAAAAAAAEAAAAaAAQAAAAAAAEAAAAaAAUAAAAAAAEAAAAZAAUAAAAAAAEAAAAYAAUAAAAAAAEAAAAYAAYAAAAAAAEAAAAZAAYAAAAAAAEAAAATAAcAAAAAAAEAAAAUAAcAAAAAAAEAAAAVAAcAAAAAAAEAAAAWAAcAAAAAAAEAAAAXAAcAAAAAAAEAAAAYAAcAAAAAAAEAAAAZAAcAAAAAAAEAAAAaAAYAAAAAAAEAAAAaAAcAAAABAAEAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAcAAIAAAAAAAEAAAAbAAIAAAAAAAEAAAAbAAMAAAAAAAEAAAAcAAMAAAAAAAEAAAAbAAQAAAAAAAEAAAAcAAQAAAAAAAEAAAAcAAUAAAABAAEAAAAbAAYAAAABAAEAAAAbAAUAAAAAAAEAAAAZAAIAAAABAAMAAAAZAAEAAAAAAAIAAAAZAAAAAAAAAAIAADAZAP//AAABAAIAAAAbAP7/AAAAAAEAAAAaAP7/AAAAAAEAAAAZAP7/AAAAAAEAAAAYAP7/AAAAAAEAAAAcAP7/AAAAAAEAAAAXAP7/AAAAAAEAAAAWAP7/AAAAAAEAAAAVAP7/AAAAAAEAAAAUAP7/AAAAAAEAAAAdAAEAAAAAAAEAAAAdAAAAAAAAAAEAAAAdAP//AAAAAAEAAAAdAP7/AAAAAAEAAAAdAAMAAAAAAAEAAAAdAAIAAAAAAAEAAAAeAAIAAAAAAAEAAAAeAAEAAAAAAAEAAAAeAAAAAAAAAAEAAAAeAP//AAAAAAEAAAAeAP7/AAAAAAEAAAAeAP3/AAAAAAEAAAAdAP3/AAAAAAEAAAAcAP3/AAAAAAEAAAAbAP3/AAAAAAEAAAAaAP3/AAAAAAEAAAAZAP3/AAAAAAEAAAAYAP3/AAAAAAEAAAAXAP3/AAAAAAEAAAAWAP3/AAAAAAEAAAAVAP3/AAAAAAEAAAAUAP3/AAAAAAEAAAAVAAUAAAABAAMAAAAVAP//AAABAAIAAAAVAAAAAAAAAAMAAAAVAAEAAAAAAAMAAAAVAAIAAAAAAAMAAAAVAAMAAAAAAAMAAAAVAAQAAAAAAAMAAAATAAgAAAAAAAEAAAASAAgAAAAAAAEAAAARAAgAAAAAAAEAAAAQAAgAAAAAAAEAAAAUAAgAAAAAAAEAAAAVAAgAAAAAAAEAAAAWAAgAAAAAAAEAAAAXAAgAAAAAAAEAAAAYAAgAAAABAAEAAAAdAAQAAAABAAEAAAAeAAMAAAABAAEAAAAOAAMAAAAAAAQAAAAOAAIAAAAAAAQAAAAOAAEAAAAAAAQAAAAOAAAAAAAAAAQAAAAOAP//AAAAAAQAAAAKAAgAAAAAAAkAAAD+//3/AAABAAEAABAUAPz/AAABAAAAAAAVAPz/AAABAAAAAAAWAPz/AAABAAAAAAAXAPz/AAABAAAAAAAYAPz/AAABAAAAAAAZAPz/AAABAAAAAAAaAPz/AAABAAAAAAAbAPz/AAABAAAAAAAcAPz/AAABAAAAAAAdAPz/AAABAAAAAAAeAPz/AAABAAAAAAATAAUAAAAAAAQAAAATAAQAAAAAAAQAAAATAAMAAAAAAAQAAAATAAIAAAAAAAQAAAATAAEAAAAAAAQAAAATAAAAAAAAAAQAAAATAP//AAAAAAQAAAATAP7/AAAAAAQAAAATAP3/AAAAAAQAAAATAPz/AAAAAAQAAAATAPv/AAAAAAQAAAAPAPn/AAABAAAAAAAQAPn/AAABAAAAAAALAPf/AAABAAAAAAAKAPf/AAABAAAAAAAJAPf/AAABAAAAAAAIAPf/AAABAAAAAAAIAPj/AAABAAEAABALAPn/AAABAAEAAAALAPj/AAAAAAEAAAAKAPj/AAAAAAEAAAAJAPj/AAAAAAEAAAAKAPn/AAAAAAEAAAD4/wgAAAAAAAkAAAD3/wgAAAABAAgAAAD2/wgAAAAAAAgAAAD1/wgAAAABAAcAAAD0/wgAAAAAAAYAAADy/wgAAAAAAAYAAADx/wgAAAAAAAcAAADw/wgAAAAAAAYAAADv/wgAAAAAAAcAAADu/wgAAAAAAAYAAADz/wgAAAAAAAcAAADt/wgAAAAAAAcAAAD4/wcAAAAAAAQAAAD4/wYAAAAAAAQAAAD4/wUAAAAAAAQAAAD4/wQAAAAAAAQAAAD4/wMAAAAAAAQAAAD4/wIAAAAAAAQAAAD4/wEAAAAAAAQAAAD4/wAAAAAAAAQAAAD4////AAAAAAQAAAD4//7/AAAAAAQAAAD4//3/AAAAAAQAAAA=")
-tile_set = SubResource("TileSet_k0juu")
-rendering_quadrant_size = 8
-physics_quadrant_size = 8
-
-[node name="Foreground" type="TileMapLayer" parent="." unique_id=334526410]
-z_index = 1
-position = Vector2(-1, 0)
-tile_map_data = PackedByteArray("AAD5/wgAAAAAAAkAAAD6/wgAAAAAAAkAAAD7/wgAAAAAAAkAAAD8/wgAAAAAAAkAAAD9/wgAAAAAAAkAAAD+/wgAAAAAAAkAAAD//wgAAAAAAAkAAAAAAAgAAAAAAAkAAAABAAgAAAAAAAkAAAACAAgAAAAAAAkAAAADAAgAAAAAAAkAAAAEAAgAAAAAAAkAAAAFAAgAAAAAAAkAAAAGAAgAAAAAAAkAAAAHAAgAAAAAAAkAAAAIAAgAAAAAAAkAAAAJAAgAAAAAAAkAAAATAAgAAAAAAAEAAAASAAgAAAAAAAEAAAARAAgAAAAAAAEAAAAQAAgAAAAAAAEAAAAUAAgAAAAAAAEAAAAVAAgAAAAAAAEAAAAWAAgAAAAAAAEAAAAXAAgAAAAAAAEAAAAYAAgAAAABAAEAAAAKAAgAAAAAAAkAAAD4/wgAAAAAAAkAAAD3/wgAAAABAAgAAAD2/wgAAAAAAAgAAAD1/wgAAAABAAcAAAD0/wgAAAAAAAYAAADz/wgAAAAAAAcAAADy/wgAAAAAAAYAAADx/wgAAAAAAAcAAADw/wgAAAAAAAYAAADv/wgAAAAAAAcAAADu/wgAAAAAAAYAAADt/wgAAAAAAAcAAAA=")
-tile_set = SubResource("TileSet_k0juu")
-rendering_quadrant_size = 8
-collision_enabled = false
-physics_quadrant_size = 8
-
-[node name="Background" type="Sprite2D" parent="." unique_id=38603644]
-visible = false
-modulate = Color(0.0011271432, 0.03382985, 0.03332782, 1)
-z_index = -1
-position = Vector2(-331, -219)
-scale = Vector2(698.00006, 434.99997)
-texture = SubResource("CanvasTexture_rwgxs")
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1865593467]
-position = Vector2(-42, 32)
-occluder = SubResource("OccluderPolygon2D_4wyf3")
-
-[node name="Candle" parent="." unique_id=860420955 instance=ExtResource("3_4wyf3")]
-position = Vector2(83, 28)
-
-[node name="Candle2" parent="." unique_id=594738009 instance=ExtResource("3_4wyf3")]
-position = Vector2(-21, 52)
-
-[node name="Candle3" parent="." unique_id=1411345030 instance=ExtResource("3_4wyf3")]
-position = Vector2(195, 20)
-
-[node name="Candle4" parent="." unique_id=1017116344 instance=ExtResource("3_4wyf3")]
-position = Vector2(219, -36)
-
-[node name="Candle5" parent="." unique_id=614148551 instance=ExtResource("3_4wyf3")]
-position = Vector2(139, 60)
-
-[node name="Candle6" parent="." unique_id=1583294304 instance=ExtResource("3_4wyf3")]
-position = Vector2(3, -44)
-
-[node name="Candle7" parent="." unique_id=1991295079 instance=ExtResource("3_4wyf3")]
-position = Vector2(85, -76)
-
-[node name="Night" type="CanvasModulate" parent="." unique_id=202240378]
-visible = false
-color = Color(0.2291616, 0.25386593, 0.48114577, 1)
-
-[node name="Day" type="CanvasModulate" parent="." unique_id=1617111289]
-position = Vector2(1, 0)
-color = Color(1, 0.9019608, 0.9019608, 1)
-
-[node name="ColorRect2" type="ColorRect" parent="." unique_id=558984212]
-visible = false
-z_index = -1
-offset_left = -161.0
-offset_top = 67.0
-offset_right = 336.0
-offset_bottom = 68.0
-color = Color(0.023529412, 0.05490196, 0.15294118, 1)
-
-[node name="Water" type="ColorRect" parent="." unique_id=1282765056]
-material = SubResource("ShaderMaterial_k0juu")
-offset_left = -255.0
-offset_top = 68.0
-offset_right = 421.0
-offset_bottom = 170.0
-
-[node name="Water" type="Area2D" parent="Water" unique_id=498847353]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/Water" unique_id=668671833]
-position = Vector2(338, 48.5)
-shape = SubResource("RectangleShape2D_k0juu")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1480269604]
 layer = -1
@@ -172,3 +51,37 @@ offset_right = 500.0144
 offset_bottom = 480.0379
 rotation = 1.5707964
 texture = SubResource("GradientTexture2D_71j4m")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1682196935 node_paths=PackedStringArray("player")]
+position = Vector2(0, -1)
+position_smoothing_enabled = true
+drag_horizontal_enabled = true
+script = ExtResource("3_k0juu")
+player = NodePath("../Player")
+
+[node name="Night" type="CanvasModulate" parent="." unique_id=765523903]
+visible = false
+color = Color(0.2291616, 0.25386593, 0.48114577, 1)
+
+[node name="Day" type="CanvasModulate" parent="." unique_id=1506081585]
+position = Vector2(1, 0)
+color = Color(1, 0.9019608, 0.9019608, 1)
+
+[node name="Map2" parent="." unique_id=1332190545 instance=ExtResource("6_qfnet")]
+process_mode = 4
+position = Vector2(1185, 0)
+
+[node name="Map1" parent="." unique_id=2078819505 instance=ExtResource("3_4wyf3")]
+
+[node name="Water" type="ColorRect" parent="." unique_id=1282765056]
+material = SubResource("ShaderMaterial_k0juu")
+offset_left = -527.0
+offset_top = 68.0
+offset_right = 1837.0
+offset_bottom = 170.0
+
+[node name="Water" type="Area2D" parent="Water" unique_id=498847353]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/Water" unique_id=668671833]
+position = Vector2(338, 48.5)
+shape = SubResource("RectangleShape2D_k0juu")
